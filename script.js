@@ -1,42 +1,54 @@
-$(document).ready(function(){
+/* Config variables */
+var echoNestApiKey = "ACE8O1JKNVBTPUMHX";
+var relatedArtistsPerQuery = 4;
 
-   $('#term').focus(function(){
-      var full = $("#related").has("img").length ? true : false;
-      if(full == false){
-         $('#related').empty();
-      }
-   });
+var app = angular.module('treespotting', []);
+app.controller('TreeSpottingController', ['$scope', function($scope) {
+	$scope.initialized = false;
 
-   var getrelated = function(){
+	// Called when the first artist is entered via the text field.
+	$scope.initialize = function() {
+		$scope.tree = [addArtirstNode($scope.initForm.artistName)];
+		$scope.initialized = true;
+	};
+	
+	// Add another level to the tree by expanding a related artist.
+	$scope.getRelated = function(data) {
+		if (data.name != "") {
+			data.expanded = true;
+		
+			getRelatedArtistsAsync(data.name, function(response) {
+				// TODO: Check for errors from the API call.
+			
+				// Need to use $scope.$apply so the view updates accordingly.
+				$scope.$apply(function() {
+					response.artists.forEach(function(entry) {
+						data.nodes.push(addArtirstNode(entry.name));
+					});
+				});
+			});
+		}
+	};
+}]);
 
-        var artist = $('#term').val();
+/**
+ * Adds an artist node to the tree of artists.
+ * @param artistName The name of the artist to add to the tree.
+ */
+var addArtirstNode = function (artistName) {
+	return {name: artistName, expanded: false, nodes: []};
+}
 
-         if(artist == ''){
-
-            $('#related').html("<h2 class='loading'>Please enter an artist...</h2>");
-
-         } else {
-
-            $('#related').html("<h2 class='loading'>Loading...</h2>");
-
-            $.getJSON("http://developer.echonest.com/api/v4/artist/similar?api_key=ACE8O1JKNVBTPUMHX&results=4&name=" + artist, function(json) {
-               console.log(json);
-				$('#related').empty();
-				$('#related').append("<h2 class='artist'>" + json.response.artists[0].name + "</h2>");
-				$('#related').append("<h2 class='artist'>" + json.response.artists[1].name + "</h2>");
-				$('#related').append("<h2 class='artist'>" + json.response.artists[2].name + "</h2>");
-				$('#related').append("<h2 class='artist'>" + json.response.artists[3].name + "</h2>");
-             });
-          }
-
-        return false;
-   }
-
-   $('#search').click(getrelated);
-   $('#term').keyup(function(event){
-       if(event.keyCode == 13){
-           getrelated();
-       }
-   });
-
-});
+/**
+ * Asynchronously retrieves a list of related artists
+ * @param artistName The name of the artist to get related artists for.
+ * @param callback The callback function to call with the related artists.
+ */
+var getRelatedArtistsAsync = function(artistName, callback) {
+	var apiUrl = "http://developer.echonest.com/api/v4/artist/similar?api_key=" + echoNestApiKey + "&results=" + relatedArtistsPerQuery + "&name=" + artistName;
+	
+	var toReturn = [];
+	$.getJSON(apiUrl, function(json) {
+		callback(json.response);
+	});
+}

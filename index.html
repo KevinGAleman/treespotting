@@ -1,10 +1,23 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="treespotting">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="script.js"></script>
-<link rel="stylesheet" href="stylesheet.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.min.js"></script>
+	<script src="script.js"></script>
+	<title>Treespotting</title>
+	<link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+	<!-- Templates -->
+	<script type="text/ng-template" id="tree_item_renderer.html">
+		{{data.name}}
+		<button ng-hide="data.expanded" ng-click="getRelated(data)">Get Related</button>
+		<ul>
+			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
+		</ul>
+	</script>
+	
+	<!-- Shell -->
 	<div id="header">
 		<p class="left">TreeSpotting</p>
 		<ul id="nav" class="right">
@@ -14,13 +27,16 @@
 		</ul>
 	</div>
 	
-	<div class="content">
-		<section id="fetch">
-			<input type="text" placeholder="Enter an artist..." id="term" />
-			<button id="search">Find similar artists</button>
-		</section>
-		<section id="related">
-		</section>
+	<!-- Page body -->
+	<div class="content" ng-controller="TreeSpottingController">
+		<div ng-hide="initialized">
+			<input type="text" placeholder="Enter an artist..." ng-model="initForm.artistName" id="term" />
+			<button id="search" ng-click="initialize()">Begin musical adventure</button>
+		</div>
+		
+		<ul>
+		<li ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></li>
+	</ul>
 	</div>
 
 </body>
