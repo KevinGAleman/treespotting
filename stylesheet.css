@@ -1,0 +1,40 @@
+* {
+	margin: 0 auto;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	height: 50px;
+	margin-bottom: 70px;
+	background-color: #ccc;
+	border-bottom: 1px solid #000;
+}
+
+#nav {
+	margin-top: 30px;
+}
+
+#nav li {
+	text-decoration: none;
+	display: inline;
+	padding-left: 40px;
+	background-color: #aaa;
+}
+
+.left {
+	margin-left: 10%;
+	float: left;
+}
+
+.right {
+	margin-right: 10%;
+	float: right;
+}
+
+.content {
+	text-align: center;
+}
