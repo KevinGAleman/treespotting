@@ -1,0 +1,1 @@
+var Spotify = new Object();
