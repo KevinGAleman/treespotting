@@ -13,10 +13,10 @@
 	<!-- Templates -->
 	<script type="text/ng-template" id="tree_item_renderer.html">
 		{{data.name}}
+		<img ng-src="{{data.img_url}}" />
 		<button ng-hide="data.expanded" ng-click="getRelated(data)">Get Related</button>
 		<ul>
 			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
-			<img ng-src="{{data.img_url}}" />
 		</ul>
 	</script>
 	
