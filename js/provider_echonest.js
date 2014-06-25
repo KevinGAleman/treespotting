@@ -10,9 +10,8 @@ EchoNest.NumRelatedArtists = 4;
  * @param callback The callback function to call with the related artists.
  */
 EchoNest.getRelatedArtistsAsync = function(artistName, callback) {
-	var apiUrl = "http://developer.echonest.com/api/v4/artist/similar?api_key=" + EchoNest.ApiKey + "&results=" + EchoNest.NumRelatedArtists + "&name=" + artistName;
+	var apiUrl = "http://developer.echonest.com/api/v4/artist/similar?api_key=" + EchoNest.ApiKey + "&results=" + EchoNest.NumRelatedArtists + "&name=" + artistName + "&bucket=id:spotify";
 	
-	var toReturn = [];
 	$.getJSON(apiUrl, function(json) {
 		callback(json.response);
 	});
