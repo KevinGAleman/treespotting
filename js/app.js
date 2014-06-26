@@ -65,3 +65,17 @@ var hasArtistBeenExpanded = function (artistId) {
 		return false;
 	}
 }
+
+/**
+ * Adds an artist node to the tree of artists.
+ * @param artistName The name of the artist to add to the tree.
+ * @param spotifyId The artist's spotify ID.
+ * @param imgUrl A URL to the artist's image.
+ * @param expanded Set to false to show the "Get Related" button. Passing no value is equal to false.
+ */
+var playTopSong = function (spotifyId) {
+	Spotify.getArtistTopTracks(spotifyId, function(json) {
+		Window.open(json.tracks[0].uri);	
+	
+	});
+}
