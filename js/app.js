@@ -4,7 +4,14 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 
 	// Called when the first artist is entered via the text field.
 	$scope.initialize = function() {
-		$scope.tree = [addArtistNode($scope.initForm.artistName, null)];
+		Spotify.getArtistImgFromName($scope.initForm.artistName, function(imgUrl){
+			initTree($scope.initForm.artistName, imgUrl);
+		});
+		//$scope.tree = [addArtistNode($scope.initForm.artistName, null)]; //deleting  so we can add imgUrl to first artist as well
+	};
+	
+	var initTree = function(artistName, imgUrl) {
+		$scope.tree = [addArtistNode(artistName, null,  imgUrl)];
 		$scope.initialized = true;
 	};
 	
@@ -18,7 +25,7 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 				
 				response.artists.forEach(function (entry) {
 					// Get each artist's image from Spotify.
-					Spotify.getArtistImg(entry.foreign_ids[0].foreign_id, function(imgUrl) {
+					Spotify.getArtistImgFromId(entry.foreign_ids[0].foreign_id, function(imgUrl) {
 						$scope.$apply(function() {
 							data.nodes.push(addArtistNode(entry.name, entry.foreign_ids[0].foreign_id, imgUrl));
 						});
@@ -34,7 +41,5 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
  * @param artistName The name of the artist to add to the tree.
  */
 var addArtistNode = function (artistName, spotifyId, imgUrl) {
-	// TODO: Use spotifyId with getArtistImg to populate the imgUrl
-	
 	return {name: artistName, spotifyId: spotifyId, img_url: imgUrl, expanded: false, nodes: []};
 }
