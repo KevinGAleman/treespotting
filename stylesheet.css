@@ -25,6 +25,18 @@ html, body {
 	background-color: #aaa;
 }
 
+.img_container {
+	margin: 0;
+	height: 200px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.artist_img {
+	height: 100%;
+	text-align: center;
+}
+
 .left {
 	margin-left: 10%;
 	float: left;
