@@ -13,8 +13,8 @@
 	<!-- Templates -->
 	<script type="text/ng-template" id="tree_item_renderer.html">
 		{{data.name}}
-		<div class="img_container"><img class="artist_img"	ng-src="{{data.img_url}}" /></div>
-		<button ng-hide="data.expanded" ng-click="getRelated(data)">Get Related</button>
+		<div class="img_container"><img class="artist_img" ng-src="{{data.img_url}}" /></div>
+		<button ng-hide="data.expanded" data-spotifyId="{{data.spotifyId}}" ng-click="getRelated(data)">Get Related</button>
 		<ul>
 			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
 		</ul>

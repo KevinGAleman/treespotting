@@ -1,4 +1,8 @@
+/* Global variables yay */
+var ExploredArtists = {};
+
 var app = angular.module('treespotting', []);
+
 app.controller('TreeSpottingController', ['$scope', function($scope) {
 	$scope.initialized = false;
 
@@ -17,15 +21,18 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 	$scope.getRelated = function(data) {
 		if (data.name != "") {
 			data.expanded = true;
+			ExploredArtists[data.spotifyId] = true;
 		
 			EchoNest.getRelatedArtistsAsync(data.name, function(response) {
 				// TODO: Check for errors from the API call.
 				
 				response.artists.forEach(function (entry) {
-					// Get each artist's image from Spotify.
-					Spotify.getArtistImgFromId(entry.foreign_ids[0].foreign_id, function(imgUrl) {
+					var spotifyId = entry.foreign_ids[0].foreign_id;
+					
+					// Get each artist's image from Spotify, then add their node to the tree.
+					Spotify.getArtistImgFromId(spotifyId, function(imgUrl) {
 						$scope.$apply(function() {
-							data.nodes.push(addArtistNode(entry.name, entry.foreign_ids[0].foreign_id, imgUrl));
+							data.nodes.push(addArtistNode(entry.name, spotifyId, imgUrl, hasArtistBeenExpanded(spotifyId)));
 						});
 					});
 				});
@@ -37,7 +44,24 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 /**
  * Adds an artist node to the tree of artists.
  * @param artistName The name of the artist to add to the tree.
+ * @param spotifyId The artist's spotify ID.
+ * @param imgUrl A URL to the artist's image.
+ * @param expanded Set to false to show the "Get Related" button. Passing no value is equal to false.
  */
-var addArtistNode = function (artistName, spotifyId, imgUrl) {
-	return {name: artistName, spotifyId: spotifyId, img_url: imgUrl, expanded: false, nodes: []};
+var addArtistNode = function (artistName, spotifyId, imgUrl, expanded) {
+	if (expanded === undefined) expanded = false;
+	return {name: artistName, spotifyId: spotifyId, img_url: imgUrl, expanded: expanded, nodes: []};
+}
+
+/**
+ * Check to see if an artist has already been expanded in the tree.
+ * @param artistId The Spotify ID of the artist to check.
+ * @returns true if the artist has been expanded, false otherwise.
+ */
+var hasArtistBeenExpanded = function (artistId) {
+	if (ExploredArtists[artistId] !== undefined) {
+		return true;
+	} else {
+		return false;
+	}
 }
