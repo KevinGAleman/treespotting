@@ -17,7 +17,7 @@
 			<img class="artist_img"	ng-src="{{data.img_url}}" />
 			<img class="artist_img_overlay" src="./img/playbutton.png" />
 		</div>
-		<button ng-hide="data.expanded" ng-click="getRelated(data)">Get Related</button>
+		<button ng-hide="data.expanded" data-spotifyId="{{data.spotifyId}}" ng-click="getRelated(data)">Get Related</button>
 		<ul>
 			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
 		</ul>
