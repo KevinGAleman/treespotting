@@ -5,13 +5,11 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 	// Called when the first artist is entered via the text field.
 	$scope.initialize = function() {
 		Spotify.getArtistImgFromName($scope.initForm.artistName, function(imgUrl){
-			initTree($scope.initForm.artistName, imgUrl);
+			$scope.$apply(function() {
+				$scope.tree = [addArtistNode($scope.initForm.artistName, null, imgUrl)];
+			});
 		});
-		//$scope.tree = [addArtistNode($scope.initForm.artistName, null)]; //deleting  so we can add imgUrl to first artist as well
-	};
-	
-	var initTree = function(artistName, imgUrl) {
-		$scope.tree = [addArtistNode(artistName, null,  imgUrl)];
+		
 		$scope.initialized = true;
 	};
 	
