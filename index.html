@@ -32,7 +32,7 @@
 	
 	<!-- Page body -->
 	<div class="content" ng-controller="TreeSpottingController">
-		<div ng-hide="initialized">
+		<div ng-hide="initialized" class="artist_input">
 			<input type="text" placeholder="Enter an artist..." ng-model="initForm.artistName" id="term" />
 			<button id="search" ng-click="initialize()">Begin musical adventure</button>
 		</div>

@@ -25,6 +25,10 @@ html, body {
 	background-color: #aaa;
 }
 
+.artist_input {
+	width: 320px;
+}
+
 .img_container {
 	margin: 0;
 	height: 200px;
