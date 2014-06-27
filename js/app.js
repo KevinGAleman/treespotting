@@ -8,10 +8,10 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 
 	// Called when the first artist is entered via the text field.
 	$scope.initialize = function() {
-		Spotify.getArtistImgFromName($scope.initForm.artistName, function(imgUrl, spotifyId, artistName){
+		Spotify.getArtistAsync($scope.initForm.artistName, function(artist){
 			$scope.$apply(function() {
-				$scope.tree = [addArtistNode(artistName, spotifyId, imgUrl)];
-				ExploredArtists[spotifyId] = true;
+				$scope.tree = [addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(artist.uri))];
+				ExploredArtists[artist.uri] = true;
 			});
 		});
 		
@@ -31,9 +31,9 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 					var spotifyId = entry.foreign_ids[0].foreign_id;
 					
 					// Get each artist's image from Spotify, then add their node to the tree.
-					Spotify.getArtistImgFromId(spotifyId, function(imgUrl) {
+					Spotify.getArtistAsync(spotifyId, function(artist) {
 						$scope.$apply(function() {
-							data.nodes.push(addArtistNode(entry.name, spotifyId, imgUrl, hasArtistBeenExpanded(spotifyId)));
+							data.nodes.push(addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(spotifyId)));
 						});
 					});
 				});
