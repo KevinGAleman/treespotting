@@ -29,7 +29,9 @@ Spotify.getArtistImgFromName = function(artistName, callback) {
 	var spotApiUrl = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist";
 	
 	$.getJSON(spotApiUrl, function(json) {
-		callback(json.artists.items[0].images[1].url, json.artists.items[0].uri);
+		var artist = json.artists.items[0];
+		console.log(artist);
+		callback(artist.images[1].url, artist.uri, artist.name);
 	});
 };
 
