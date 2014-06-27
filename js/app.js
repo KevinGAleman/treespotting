@@ -42,7 +42,7 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 	
 	$scope.playTopSong = function (spotifyId) {
 		Spotify.getArtistTopTracks(spotifyId, function(json) {
-			window.open(json.tracks[0].uri);	
+			window.open(json.tracks[0].uri,"_self");	
 		});
 	}
 }]);
