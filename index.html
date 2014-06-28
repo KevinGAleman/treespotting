@@ -12,15 +12,15 @@
 <body>
 	<!-- Templates -->
 	<script type="text/ng-template" id="tree_item_renderer.html">
-		{{data.name}}
-		<div class="img_container" ng-click="playTopSong(data.spotifyId)">
-			<img class="artist_img"	ng-src="{{data.img_url}}" />
-			<img class="artist_img_overlay" src="./img/playbutton.png" />
+		<div class="row" ng-style="{left: 205 * data.position - 160, top: 220 * data.level + 100}">
+			{{data.name}}
+			<div class="img_container" ng-click="playTopSong(data.spotifyId)">
+				<img class="artist_img"	ng-src="{{data.img_url}}" />
+				<img class="artist_img_overlay" src="./img/playbutton.png" />
+			</div>
+			<button ng-hide="data.expanded" data-spotifyId="{{data.spotifyId}}" ng-click="getRelated(data)">Get Related</button>
 		</div>
-		<button ng-hide="data.expanded" data-spotifyId="{{data.spotifyId}}" ng-click="getRelated(data)">Get Related</button>
-		<ul>
-			<li ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></li>
-		</ul>
+		<div ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></div>		
 	</script>
 	
 	<!-- Shell -->
@@ -42,9 +42,9 @@
 			</form>
 		</div>
 		
-		<ul>
-			<li ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></li>
-		</ul>
+		<!-- <ul> -->
+			<div ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></div>
+		<!-- </ul> -->
 	</div>
 
 </body>
