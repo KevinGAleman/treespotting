@@ -12,7 +12,7 @@
 <body>
 	<!-- Templates -->
 	<script type="text/ng-template" id="tree_item_renderer.html">
-		<div class="row" ng-style="{left: 205 * data.position, top: 220 * data.level + 100}">
+		<div class="row" ng-style="{left: 205 * data.position - 160, top: 220 * data.level + 100}">
 			{{data.name}}
 			<div class="img_container" ng-click="playTopSong(data.spotifyId)">
 				<img class="artist_img"	ng-src="{{data.img_url}}" />
