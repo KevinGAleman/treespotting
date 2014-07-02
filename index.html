@@ -12,16 +12,17 @@
 <body>
 	<!-- Templates -->
 	<script type="text/ng-template" id="tree_item_renderer.html">
-		<div class="row" ng-style="{left: 205 * data.position - 160, top: 250 * data.level + 100}">
+		<div class="item">
 			{{data.name}}
 			<div class="img_container" ng-click="playTopSong(data.spotifyId)">
 				<img class="artist_img"	ng-src="{{data.img_url}}" />
 				<img class="artist_img_overlay" src="./img/playbutton.png" />
 			</div>
 			<button ng-hide="data.expanded" data-spotifyId="{{data.spotifyId}}" ng-click="getRelated(data)">Get Related</button>
-			<span>L: {{data.level}} P: {{data.position}}</span>
 		</div>
-		<div ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'"></div>		
+		<div class="related_group">
+			<div ng-repeat="data in data.nodes" ng-include="'tree_item_renderer.html'" class="item_container"></div>
+		</div>
 	</script>
 	
 	<!-- Shell -->
@@ -43,9 +44,7 @@
 			</form>
 		</div>
 		
-		<!-- <ul> -->
-			<div ng-repeat="data in tree" ng-include="'tree_item_renderer.html'"></div>
-		<!-- </ul> -->
+		<div ng-repeat="data in tree" ng-include="'tree_item_renderer.html'" class="root"></div>
 	</div>
 
 </body>

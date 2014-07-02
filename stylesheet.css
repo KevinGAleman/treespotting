@@ -2,9 +2,10 @@
 	margin: 0 auto;
 }
 
-html, body {
+body {
 	background-color: #222326;
 	color: white;
+	white-space: nowrap;
 }
 
 #header {
@@ -21,6 +22,10 @@ html, body {
 	text-decoration: none;
 	display: inline;
 	padding-left: 40px;
+}
+
+.root {
+	text-align: center;
 }
 
 .artist_input {
@@ -41,12 +46,7 @@ html, body {
 	height: 200px;
 	width: 200px;
 	overflow: hidden;
-}
-
-.artist_img {
-	height: 100%;
-	position: absolute;
-	top: 0;
+	text-align: left;
 }
 
 .artist_img_overlay {
@@ -66,8 +66,19 @@ html, body {
 	float: right;
 }
 
-/* This section is Kevin's play section for trying to build trees in CSS */
+.item_container {
+	vertical-align: top;
+}
 
-.row{
-	position: absolute;
+.item {
+	display: block;
+}
+
+.related_group {
+	display: inline-block;
+}
+
+.related_group > div {
+	display: inline-block;
+	border: solid 1px white;
 }

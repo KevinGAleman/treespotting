@@ -1,6 +1,5 @@
 /* Global variables yay */
 var ExploredArtists = {};
-var ArtistsPerLevel = {};
 
 var app = angular.module('treespotting', []);
 
@@ -11,7 +10,7 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 	$scope.initialize = function() {
 		Spotify.getArtistAsync($scope.initForm.artistName, function(artist){
 			$scope.$apply(function() {
-				$scope.tree = [addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(artist.uri), 0, 1)];
+				$scope.tree = [addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(artist.uri))];
 				ExploredArtists[artist.uri] = true;
 			});
 		});
@@ -35,10 +34,7 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 					// Get each artist's image from Spotify, then add their node to the tree.
 					Spotify.getArtistAsync(spotifyId, function(artist) {
 						$scope.$apply(function() {
-							if(isNaN(ArtistsPerLevel[data.level])) ArtistsPerLevel[data.level] = 0; 
-							ArtistsPerLevel[data.level] += 1;
-							console.log(ArtistsPerLevel[data.level], data.level);
-							data.nodes.push(addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(spotifyId), data.level+1, ArtistsPerLevel[data.level]));
+							data.nodes.push(addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(spotifyId)));
 						});
 					});
 				}
@@ -60,9 +56,9 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
  * @param imgUrl A URL to the artist's image.
  * @param expanded Set to false to show the "Get Related" button. Passing no value is equal to false.
  */
-var addArtistNode = function (artistName, spotifyId, imgUrl, expanded, level, position) {
+var addArtistNode = function (artistName, spotifyId, imgUrl, expanded) {
 	if (expanded === undefined) expanded = false;
-	return {name: artistName, spotifyId: spotifyId, img_url: imgUrl, expanded: expanded, level: level, position: position, nodes: []};
+	return {name: artistName, spotifyId: spotifyId, img_url: imgUrl, expanded: expanded,  nodes: []};
 }
 
 /**
