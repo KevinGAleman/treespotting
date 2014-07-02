@@ -28,7 +28,8 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 			EchoNest.getRelatedArtistsAsync(data.name, function(response) {
 				// TODO: Check for errors from the API call.
 				
-				response.artists.forEach(function (entry) {
+				for (var i = 0; i < response.artists.length; i++) {
+					var entry = response.artists[i];
 					var spotifyId = entry.foreign_ids[0].foreign_id;
 					
 					// Get each artist's image from Spotify, then add their node to the tree.
@@ -40,7 +41,7 @@ app.controller('TreeSpottingController', ['$scope', function($scope) {
 							data.nodes.push(addArtistNode(artist.name, artist.uri, artist.images[1].url, hasArtistBeenExpanded(spotifyId), data.level+1, ArtistsPerLevel[data.level]));
 						});
 					});
-				});
+				}
 			});
 		}
 	};
