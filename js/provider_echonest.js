@@ -2,7 +2,7 @@ var EchoNest = new Object();
 
 /* Config vars */
 EchoNest.ApiKey = "ACE8O1JKNVBTPUMHX";
-EchoNest.NumRelatedArtists = 4;
+EchoNest.NumRelatedArtists = 3;
 
 /**
  * Asynchronously retrieves a list of related artists
