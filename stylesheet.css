@@ -41,20 +41,16 @@ body {
 }
 
 .img_container {
-	position: relative;
-	margin: 0;
 	height: 200px;
 	width: 200px;
-	overflow: hidden;
-	text-align: left;
+	background-size: cover;
+	padding: 0 5px 0 5px;
+	background-clip: content-box;
 	cursor: pointer;
 }
 
 .artist_img_overlay {
-	height: 100%;
 	opacity: 0;
-	position: absolute;
-	top: 0;
 }
 
 .left {
@@ -77,9 +73,9 @@ body {
 
 .related_group {
 	display: inline-block;
+	border: solid 1px white;
 }
 
 .related_group > div {
 	display: inline-block;
-	border: solid 1px white;
 }
